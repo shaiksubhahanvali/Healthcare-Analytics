@@ -1,0 +1,236 @@
+CREATE DATABASE IF NOT EXISTS Hospital;
+USE Hospital;
+
+CREATE TABLE hospital_analysis (
+    FAC_NO BIGINT,
+    FAC_NAME VARCHAR(255),
+    YEAR INT,
+    QTR INT,
+    BEG_DATE DATE,
+    END_DATE DATE,
+    OP_STATUS VARCHAR(50),
+    COUNTY_NAME VARCHAR(100),
+    HSA_NAME VARCHAR(100),
+    HFPA INT,
+    TYPE_CNTRL VARCHAR(100),
+    TYPE_HOSP VARCHAR(100),
+    TEACH_RURL VARCHAR(50),
+    PHONE VARCHAR(30),
+    ADDRESS VARCHAR(255),
+    CITY VARCHAR(100),
+    ZIP_CODE VARCHAR(15),
+    CEO VARCHAR(150),
+    LIC_BEDS BIGINT,
+    AVL_BEDS BIGINT,
+    STF_BEDS BIGINT,
+    DIS_MCAR BIGINT,
+    DIS_MCAR_MC BIGINT,
+    DIS_MCAL BIGINT,
+    DIS_MCAL_MC BIGINT,
+    DIS_CNTY BIGINT,
+    DIS_CNTY_MC BIGINT,
+    DIS_THRD BIGINT,
+    DIS_THRD_MC BIGINT,
+    DIS_INDGNT BIGINT,
+    DIS_OTH BIGINT,
+    DIS_TOT BIGINT,
+    DIS_LTC BIGINT,
+    DAY_MCAR BIGINT,
+    DAY_MCAR_MC BIGINT,
+    DAY_MCAL BIGINT,
+    DAY_MCAL_MC BIGINT,
+    DAY_CNTY BIGINT,
+    DAY_CNTY_MC BIGINT,
+    DAY_THRD BIGINT,
+    DAY_THRD_MC BIGINT,
+    DAY_INDGNT BIGINT,
+    DAY_OTH BIGINT,
+    DAY_TOT BIGINT,
+    DAY_LTC BIGINT,
+    VIS_MCAR BIGINT,
+    VIS_MCAR_MC BIGINT,
+    VIS_MCAL BIGINT,
+    VIS_MCAL_MC BIGINT,
+    VIS_CNTY BIGINT,
+    VIS_CNTY_MC BIGINT,
+    VIS_THRD BIGINT,
+    VIS_THRD_MC BIGINT,
+    VIS_INDGNT BIGINT,
+    VIS_OTH BIGINT,
+    VIS_TOT BIGINT,
+    GRIP_MCAR BIGINT,
+    GRIP_MCAR_MC BIGINT,
+    GRIP_MCAL BIGINT,
+    GRIP_MCAL_MC BIGINT,
+    GRIP_CNTY BIGINT,
+    GRIP_CNTY_MC BIGINT,
+    GRIP_THRD BIGINT,
+    GRIP_THRD_MC BIGINT,
+    GRIP_INDGNT BIGINT,
+    GRIP_OTH BIGINT,
+    GRIP_TOT BIGINT,
+    GROP_MCAR BIGINT,
+    GROP_MCAR_MC BIGINT,
+    GROP_MCAL BIGINT,
+    GROP_MCAL_MC BIGINT,
+    GROP_CNTY BIGINT,
+    GROP_CNTY_MC BIGINT,
+    GROP_THRD BIGINT,
+    GROP_THRD_MC BIGINT,
+    GROP_INDGNT BIGINT,
+    GROP_OTH BIGINT,
+    GROP_TOT BIGINT,
+    BAD_DEBT BIGINT,
+    CADJ_MCAR BIGINT,
+    CADJ_MCAR_MC BIGINT,
+    CADJ_MCAL BIGINT,
+    CADJ_MCAL_MC BIGINT,
+    DISP_855 BIGINT,
+    CADJ_CNTY BIGINT,
+    CADJ_CNTY_MC BIGINT,
+    CADJ_THRD BIGINT,
+    CADJ_THRD_MC BIGINT,
+    CHAR_HB BIGINT,
+    CHAR_OTH BIGINT,
+    SUB_INDGNT BIGINT,
+    TCH_ALLOW BIGINT,
+    TCH_SUPP BIGINT,
+    DED_OTH BIGINT,
+    DED_TOT BIGINT,
+    CAP_MCAR BIGINT,
+    CAP_MCAL BIGINT,
+    CAP_CNTY BIGINT,
+    CAP_THRD BIGINT,
+    CAP_TOT BIGINT,
+    NET_MCAR BIGINT,
+    NET_MCAR_MC BIGINT,
+    NET_MCAL BIGINT,
+    NET_MCAL_MC BIGINT,
+    NET_CNTY BIGINT,
+    NET_CNTY_MC BIGINT,
+    NET_THRD BIGINT,
+    NET_THRD_MC BIGINT,
+    NET_INDGNT BIGINT,
+    NET_OTH BIGINT,
+    NET_TOT BIGINT,
+    OTH_OP_REV BIGINT,
+    TOT_OP_EXP BIGINT,
+    PHY_COMP BIGINT,
+    NONOP_REV BIGINT,
+    DIS_PIPS BIGINT,
+    DAY_PIPS BIGINT,
+    EXP_PIPS BIGINT,
+    EXP_POPS BIGINT,
+    CAP_EXP BIGINT,
+    FIX_ASSETS BIGINT,
+    DISP_TRNFR BIGINT,
+    DIS_TOT_CC BIGINT,
+    PAT_DAY_TOT_CC BIGINT,
+    TOT_OUT_VIS_CC BIGINT,
+    GROS_INPAT_REV_CC BIGINT,
+    GROS_OUTPAT_REV_CC BIGINT,
+    CONTR_ADJ_CC BIGINT,
+    OTHR_DEDUCT_CC BIGINT,
+    CAP_PREM_REV_CC BIGINT,
+    NET_PAT_REV_CC BIGINT,
+    QA_FEES BIGINT,
+    QA_SUPPL_PAY BIGINT,
+    MNGD_CARE_QA_PAY BIGINT);
+  
+  
+SHOW TABLES;
+DESCRIBE hospital_analysis;
+SELECT COUNT(*) AS current_rows FROM hospital_analysis;
+SHOW VARIABLES LIKE 'local_infile';
+
+LOAD DATA LOCAL INFILE 'C:/Users/SHAIK SUBHAHN VALI/Documents/Hospital_Analysis sql.csv'
+INTO TABLE hospital_analysis
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES;
+
+SELECT COUNT(*) AS total_rows FROM hospital_analysis;
+
+-- Total gross patient revenue 
+SELECT SUM(COALESCE(GRIP_TOT, 0) + COALESCE(GROP_TOT, 0)) AS Total_Gross_Patient_Revenue
+FROM hospital_analysis;
+
+-- Total gross patient revenue 
+SELECT CONCAT('$',FORMAT(SUM(COALESCE(GRIP_TOT, 0) + COALESCE(GROP_TOT, 0))/ 1000000000,2),'B') AS Total_Gross_Patient_Revenue
+FROM hospital_analysis;
+
+-- Total operating revenue 
+SELECT CONCAT('$',FORMAT(SUM(COALESCE(NET_TOT, 0) + COALESCE(OTH_OP_REV, 0))/ 1000000000,2),'B') AS Total_Operating_Revenue
+FROM hospital_analysis;
+
+-- Operating result 
+SELECT CONCAT('$', FORMAT((SUM(COALESCE(NET_TOT,0)) + SUM(COALESCE(OTH_OP_REV,0)) - SUM(COALESCE(TOT_OP_EXP,0))) / 1000000000, 2), 'B') AS Operating_Result
+FROM hospital_analysis;
+
+-- Operating margin (%) 
+SELECT CONCAT(ROUND((SUM(COALESCE(NET_TOT,0)) + SUM(COALESCE(OTH_OP_REV,0)) - SUM(COALESCE(TOT_OP_EXP,0))) / NULLIF(SUM(COALESCE(NET_TOT,0) + COALESCE(OTH_OP_REV,0)),0) * 100, 2), '%') AS Operating_Margin_Percent
+FROM hospital_analysis;
+
+-- Net-to-gross revenue ratio (%)
+SELECT CONCAT(ROUND(SUM(COALESCE(NET_TOT,0)) / NULLIF(SUM(COALESCE(GRIP_TOT,0) + COALESCE(GROP_TOT,0)),0) * 100, 2), '%') AS Net_To_Gross_Revenue_Ratio
+FROM hospital_analysis;
+
+-- Capital expenditure
+SELECT CONCAT('$', FORMAT(SUM(COALESCE(CAP_EXP,0)) / 1000000000, 2), 'B') AS Total_Capital_Expenditure
+FROM hospital_analysis;
+
+-- Top 10 Hospitals by Net Patient Revenue
+SELECT FAC_NAME, CONCAT('$', FORMAT(SUM(NET_TOT) / 1000000000, 2), 'B') AS Net_Patient_Revenue_Billions
+FROM hospital_analysis GROUP BY FAC_NAME ORDER BY SUM(NET_TOT) DESC LIMIT 10;
+
+-- operating expenses versus operating revenue by hospital
+SELECT FAC_NAME AS Hospital_Name,
+CONCAT('$', FORMAT(SUM(NET_TOT + OTH_OP_REV) / 1000000000, 2), 'B') AS Operating_Revenue,
+CONCAT('$', FORMAT(SUM(TOT_OP_EXP) / 1000000000, 2), 'B') AS Operating_Expenses
+FROM Hospital_analysis
+GROUP BY FAC_NAME
+ORDER BY SUM(NET_TOT + OTH_OP_REV) DESC limit 10;
+
+-- Cities by Hospital Count
+SELECT
+    CITY AS City_Name,
+    COUNT(DISTINCT FAC_NO) AS Hospital_Count
+FROM Hospital_analysis
+GROUP BY CITY
+ORDER BY Hospital_Count DESC;
+
+-- Counties by Hospital Count
+SELECT
+    FAC_NAME AS Hospita_Name,
+    SUM(DIS_MCAR) AS Medicare_Discharges,
+    SUM(DIS_MCAL) AS Medicaid_Discharges,
+    SUM(DIS_CNTY) AS County_Discharges,
+    SUM(DIS_THRD) AS Third_Party_Discharges,
+    SUM(DIS_OTH) AS Other_Discharges
+FROM Hospital_analysis
+GROUP BY FAC_NAME
+ORDER BY SUM(DIS_MCAR) DESC LIMIT 10;
+
+-- available beds versus net patient revenue
+SELECT
+    FAC_NAME AS Hospital_Name,
+    ROUND(AVG(AVL_BEDS), 0) AS Available_Beds,
+    CONCAT('$', FORMAT(SUM(NET_TOT) / 1000000000, 2), 'B')
+        AS Net_Patient_Revenue
+FROM Hospital_analysis
+GROUP BY FAC_NAME
+ORDER BY AVG(AVL_BEDS) DESC
+LIMIT 10;
+
+-- hospital name, county, staffed beds, discharges, net revenue and operating margin
+SELECT
+    FAC_NAME AS Hospital_Name,
+    COUNTY_NAME AS County,
+    ROUND(MAX(STF_BEDS), 0) AS Staffed_Beds,
+    SUM(DIS_TOT) AS Total_Discharges,
+    CONCAT('$', FORMAT(SUM(NET_TOT) / 1000000000, 2), 'B') AS Net_Revenue,
+    CONCAT(FORMAT(((SUM(NET_TOT + OTH_OP_REV) - SUM(TOT_OP_EXP))/ NULLIF(SUM(NET_TOT + OTH_OP_REV), 0)) * 100,2),'%') AS Operating_Margin
+FROM Hospital_analysis
+GROUP BY FAC_NAME, COUNTY_NAME
+ORDER BY MAX(AVL_BEDS) DESC LIMIT 10;
